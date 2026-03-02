@@ -9,9 +9,7 @@
 
 <style>
 body {
-    margin: 0;
-    * {
-    font-family: 'Poppins', sans-serif !important;
+    font-family: 'Poppins', sans-serif;
 }
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: white;
@@ -113,17 +111,19 @@ button:hover {
     border-radius: 10px;
     border: 1px solid #ddd;
     font-size: 15px;
-    font-family: 'Poppins', sans-serif !important;
+    font-family: 'Poppins', sans-serif;
     color: #111;
     background-color: #fff;
 
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+
+    background-image: none;
 }
 
-.phone-group select option {
-    font-family: 'Poppins', sans-serif;
+.phone-group select::-ms-expand {
+    display: none;
 }
 
 </style>
