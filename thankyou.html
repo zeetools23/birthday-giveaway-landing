@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Luck Rockstar! 🎉</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #ff00cc, #ff8c00, #00f5ff, #ff00cc);
+    background-size: 400% 400%;
+    animation: bgMove 6s ease infinite;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    margin-top: 12vh;
+}
+
+h1 {
+    font-size: 60px;
+    margin-bottom: 15px;
+    animation: popIn 0.6s ease;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+p {
+    font-size: 22px;
+    margin-bottom: 35px;
+}
+
+.share-btn {
+    background: white;
+    color: #ff0080;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.share-btn:hover {
+    transform: scale(1.1);
+}
+
+#wheel-container {
+    margin-top: 50px;
+    display: none;
+}
+
+#wheel {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 12px solid white;
+    margin: 0 auto;
+    background: conic-gradient(
+        #ff00cc 0deg 90deg,
+        #ff8c00 90deg 180deg,
+        #00f5ff 180deg 270deg,
+        #ffffff 270deg 360deg
+    );
+    transition: transform 4s cubic-bezier(.17,.67,.83,.67);
+}
+
+.spin-btn {
+    margin-top: 25px;
+    padding: 14px 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    background: #ffffff;
+    color: #ff0080;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* MASSIVE CONFETTI EXPLOSION */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    animation: explode 1.6s ease-out forwards;
+}
+
+@keyframes explode {
+    to {
+        transform: translate(var(--x), var(--y)) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<script>
+/* BIG CONFETTI EXPLOSION */
+for (let i = 0; i < 250; i++) {
+    let confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.background = ["#ff00cc","#ff8c00","#00f5ff","#ffffff"][Math.floor(Math.random()*4)];
+    confetti.style.setProperty('--x', (Math.random() * 1000 - 500) + "px");
+    confetti.style.setProperty('--y', (Math.random() * 1000 - 500) + "px");
+    document.body.appendChild(confetti);
+}
+
+/* SHARE + UNLOCK */
+function shareAndUnlock() {
+    navigator.clipboard.writeText("https://zeetools23.github.io/birthday-giveaway-landing/");
+    alert("🔥 Link copied! Share it with friends to increase your chances!");
+    document.getElementById("wheel-container").style.display = "block";
+}
+
+/* SPIN FUNCTION */
+function spinWheel() {
+    let wheel = document.getElementById("wheel");
+    let randomDeg = 3600 + Math.floor(Math.random() * 360);
+    wheel.style.transform = "rotate(" + randomDeg + "deg)";
+}
+</script>
+
+<div class="container">
+    <h1>🎉 Good Luck Rockstar! 🎉</h1>
+    <p>You’re officially in. Want a bonus prize?</p>
+
+    <button class="share-btn" onclick="shareAndUnlock()">
+        SHARE TO UNLOCK BONUS SPIN 🚀
+    </button>
+
+    <div id="wheel-container">
+        <div id="wheel"></div>
+        <button class="spin-btn" onclick="spinWheel()">SPIN NOW 🎡</button>
+    </div>
+</div>
+
+</body>
+</html>
