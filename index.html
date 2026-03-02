@@ -9,12 +9,36 @@
 
 <style>
 body {
+    margin: 0;
     font-family: 'Poppins', sans-serif;
-}
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #ff4e50);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
 }
 
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+    
+ .badge {
+    background: linear-gradient(90deg, #ff4e50, #ff9966);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 20px;
+}   
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
 .card {
     background: white;
     color: #111;
@@ -74,18 +98,18 @@ button {
     padding: 16px;
     margin-top: 20px;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
     background: linear-gradient(90deg, #ff4e50, #ff9966);
     color: white;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.25s ease;
 }
 
 button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(255,78,80,0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(255,78,80,0.4);
 }
 
 .trust {
@@ -120,11 +144,16 @@ button:hover {
 }
 
 </style>
+    <div class="badge">Daily $100 Prize</div>
 </head>
 
 <body>
-
-    <div class="card">
+    <div class="wrapper">
+        <div class="card">
+            ... your form ...
+        </div>
+    </div>
+</body>
 
         <h1>Win On Your Birthday 🎉</h1>
         <div class="sub">Enter once. Get automatically entered every year.</div>
