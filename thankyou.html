@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Good Luck Rockstar! 🎉</title>
-
+<title>Thank You 🎉</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
-
 <style>
 body {
     margin: 0;
@@ -14,145 +12,50 @@ body {
     background: linear-gradient(-45deg, #ff00cc, #ff8c00, #00f5ff, #ff00cc);
     background-size: 400% 400%;
     animation: bgMove 6s ease infinite;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     text-align: center;
     color: white;
+    overflow: hidden;
 }
-
 @keyframes bgMove {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
-
-.container {
-    margin-top: 10vh;
-    position: relative;
-    z-index: 5;
-}
-
 h1 {
-    font-size: 55px;
+    font-size: 60px;
     margin-bottom: 10px;
 }
-
 p {
-    font-size: 20px;
+    font-size: 22px;
     margin-bottom: 30px;
 }
-
-.share-btn, .spin-btn {
+a.button {
     background: white;
     color: #ff0080;
     padding: 15px 35px;
     border-radius: 50px;
     font-weight: 800;
     font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
+    text-decoration: none;
     transition: 0.3s;
 }
-
-.share-btn:hover, .spin-btn:hover {
+a.button:hover {
     transform: scale(1.1);
 }
-
-#wheel-container {
-    display: none;
-    margin-top: 40px;
-}
-
-.wheel-wrapper {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    margin: 0 auto;
-}
-
-.pointer {
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 42px;
-    z-index: 10;
-}
-
-#wheel {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 10px solid white;
-    transition: transform 4s cubic-bezier(.17,.67,.83,.67);
-    background: conic-gradient(
-        #ff0080 0deg 90deg,
-        #ff8c00 90deg 180deg,
-        #00f5ff 180deg 270deg,
-        #ffffff 270deg 360deg
-    );
-    position: relative;
-}
-
-/* Segment Labels */
-.label {
-    position: absolute;
-    width: 50%;
-    left: 50%;
-    top: 50%;
-    transform-origin: 0% 0%;
-    font-weight: 800;
-    font-size: 14px;
-    color: black;
-}
-
-.result {
-    margin-top: 25px;
-    font-size: 22px;
-    font-weight: 800;
-}
-
-.lock {
-    font-size: 70px;
-    cursor: pointer;
-    margin-top: 20px;
-    display: none;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-}
-
-.message-box {
-    display: none;
-    margin-top: 20px;
-    font-size: 20px;
-    background: white;
-    color: #ff0080;
-    padding: 25px;
-    border-radius: 15px;
-    animation: popIn 0.6s ease;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0.6); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-/* Confetti */
 .confetti {
     position: fixed;
-    width: 8px;
-    height: 8px;
     top: 50%;
     left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
     opacity: 1;
     animation: explode 1.6s ease-out forwards;
 }
-
 @keyframes explode {
     to {
         transform: translate(var(--x), var(--y)) rotate(720deg);
@@ -161,102 +64,22 @@ p {
 }
 </style>
 </head>
-
 <body>
-
 <script>
-/* Initial celebration */
+// confetti explosion on page load
 for (let i = 0; i < 200; i++) {
-    let c = document.createElement("div");
-    c.classList.add("confetti");
-    c.style.background = ["#ff00cc","#ff8c00","#00f5ff","#ffffff"][Math.floor(Math.random()*4)];
-    c.style.setProperty('--x', (Math.random() * 1000 - 500) + "px");
-    c.style.setProperty('--y', (Math.random() * 1000 - 500) + "px");
-    document.body.appendChild(c);
-}
-
-let hasShared = false;
-
-async function shareAndUnlock() {
-    const shareData = {
-        title: "Birthday Giveaway 🎉",
-        text: "I just entered this Birthday Giveaway! 🎉",
-        url: "https://zeetools23.github.io/birthday-giveaway-landing/"
-    };
-
-    if (navigator.share) {
-        try {
-            await navigator.share(shareData);
-            unlockSpin();
-        } catch {
-            alert("You must complete the share to unlock your spin 😉");
-        }
-    } else {
-        window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareData.url), "_blank");
-        setTimeout(unlockSpin, 2000);
-    }
-}
-
-function unlockSpin() {
-    hasShared = true;
-    document.getElementById("wheel-container").style.display = "block";
-}
-
-function spinWheel() {
-    if (!hasShared) {
-        alert("Share first to unlock your spin 🚀");
-        return;
-    }
-
-    const wheel = document.getElementById("wheel");
-
-    /* Always land on Message 4 U (4th segment) */
-    const degrees = 3600 + (270 + 45);
-
-    wheel.style.transform = "rotate(" + degrees + "deg)";
-
-    setTimeout(() => {
-        document.getElementById("result").innerText = "You won: Message 4 U 💌";
-        document.getElementById("lock").style.display = "block";
-    }, 4200);
-}
-
-function unlockMessage() {
-    document.getElementById("lock").style.display = "none";
-    document.getElementById("messageBox").style.display = "block";
-
-    for (let i = 0; i < 150; i++) {
-        let c = document.createElement("div");
-        c.classList.add("confetti");
-        c.style.background = ["#ff00cc","#ff8c00","#00f5ff","#ffffff"][Math.floor(Math.random()*4)];
-        c.style.setProperty('--x', (Math.random() * 1000 - 500) + "px");
-        c.style.setProperty('--y', (Math.random() * 1000 - 500) + "px");
-        document.body.appendChild(c);
-    }
+    let conf = document.createElement('div');
+    conf.classList.add('confetti');
+    conf.style.background = ["#ff00cc","#ff8c00","#00f5ff","#ffffff"][Math.floor(Math.random()*4)];
+    conf.style.setProperty('--x', (Math.random()*1000 - 500)+'px');
+    conf.style.setProperty('--y', (Math.random()*800 - 400)+'px');
+    document.body.appendChild(conf);
 }
 </script>
-
-<div class="container">
-    <h1>🎉 Good Luck Rockstar! 🎉</h1>
-    <p>Share to unlock your bonus spin.</p>
-
-    <button class="share-btn" onclick="shareAndUnlock()">SHARE TO UNLOCK 🚀</button>
-
-    <div id="wheel-container">
-        <div class="wheel-wrapper">
-            <div class="pointer">🔻</div>
-            <div id="wheel"></div>
-        </div>
-
-        <button class="spin-btn" onclick="spinWheel()">SPIN NOW 🎡</button>
-        <div id="result" class="result"></div>
-        <div id="lock" class="lock" onclick="unlockMessage()">🔒</div>
-
-        <div id="messageBox" class="message-box">
-            You are enough as you are, so don’t diminish the things that make you special :)
-        </div>
-    </div>
+<div>
+    <h1>Thank You! 🎉</h1>
+    <p>Your entry has been received.</p>
+    <a href="/" class="button">Back to Home</a>
 </div>
-
 </body>
 </html>
