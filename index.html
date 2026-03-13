@@ -4,238 +4,379 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Party Giveaway</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <style>
 
-*{
-
-box-sizing:border-box;
-
-}
+*{box-sizing:border-box;}
 
 body{
-
 margin:0;
-
 font-family:'Poppins',sans-serif;
-
 background:
-
 radial-gradient(circle at 20% 30%,#ff00cc,transparent 40%),
-
 radial-gradient(circle at 80% 70%,#00f5ff,transparent 40%),
-
 linear-gradient(-45deg,#ff0080,#ff8c00,#00f5ff,#ff0000);
-
 background-size:400% 400%;
-
 animation:bgMove 8s ease infinite;
-
+overflow-x:hidden;
 color:white;
-
 }
 
 @keyframes bgMove{
-
-0%{background-position:0% 50%;}
-
-50%{background-position:100% 50%;}
-
-100%{background-position:0% 50%;}
-
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
-.container{
-
-max-width:420px;
-
-margin:auto;
-
-padding:40px 20px;
-
+/* Confetti */
+.confetti{
+position:fixed;
+top:-20px;
+border-radius:3px;
+opacity:0.9;
+animation:fall linear infinite;
+z-index:1;
+}
+@keyframes fall{
+100%{transform:translateY(110vh) rotate(720deg);}
 }
 
-h1{
-
+/* Banner */
+.launch-banner{
 text-align:center;
-
-font-size:34px;
-
+padding:14px;
 font-weight:800;
-
-margin-bottom:5px;
-
+background:rgba(0,0,0,0.6);
+letter-spacing:2px;
 }
 
-.sub{
+/* Layout */
+.wrapper{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:calc(100vh - 60px);
+padding:30px 20px;
+position:relative;
+z-index:5;
+}
 
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(25px);
+border-radius:30px;
+padding:60px 50px;
+max-width:600px;
+width:100%;
 text-align:center;
+box-shadow:0 0 80px rgba(255,0,128,0.6),
+0 0 150px rgba(0,255,255,0.5);
+overflow:hidden;
+}
 
+/* Headline */
+.headline-wrap{margin-bottom:30px;}
+
+.nuclear-headline{
+font-size:34px;
+font-weight:800;
+text-transform:uppercase;
+background:linear-gradient(90deg,#ffffff,#ffff00,#ffffff);
+background-size:200% auto;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:shineText 3s linear infinite;
+}
+@keyframes shineText{
+0%{background-position:200% center;}
+100%{background-position:-200% center;}
+}
+
+.prize-line{
+margin-top:15px;
 font-size:22px;
+font-weight:800;
+color:#ffff00;
+text-shadow:0 0 20px #ff8c00, 0 0 40px #ff0000;
+}
 
-color:#ffe600;
+form{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
 
-margin-bottom:30px;
-
+.row,.phone-group{
+display:flex;
+gap:18px;
 }
 
 input,select{
-
-width:100%;
-
-padding:16px;
-
-border-radius:30px;
-
+flex:1;
+padding:18px;
+border-radius:14px;
 border:none;
+font-size:15px;
+font-weight:600;
+background:rgba(255,255,255,0.95);
+width:100%;
+}
 
-margin-bottom:14px;
+/* Date fix */
+.dob-wrapper{
+position:relative;
+text-align:left;
+width:100%;
+}
 
-font-size:16px;
+.dob-wrapper input{
+width:100%;
+display:block;
+}
 
+.dob-label{
+position:absolute;
+top:8px;
+left:18px;
+background:transparent;
+font-size:14px;
+font-weight:600;
+color:#666;
+pointer-events:none;
 }
 
 button{
-
-width:100%;
-
-padding:18px;
-
+padding:22px;
 border:none;
-
-border-radius:40px;
-
-font-size:20px;
-
-font-weight:800;
-
+border-radius:15px;
+background:linear-gradient(90deg,#ff00cc,#ff8c00);
 color:white;
-
+font-size:22px;
+font-weight:800;
 cursor:pointer;
-
 }
 
-.enter{
-
-background:linear-gradient(90deg,#ff00cc,#ff7a00);
-
+.how-box{
+margin-top:10px;
+padding:22px;
+border-radius:15px;
+background:linear-gradient(135deg,#00f5ff,#0099ff);
+display:flex;
+align-items:center;
+justify-content:center;
+gap:14px;
+cursor:pointer;
+box-shadow:0 0 35px rgba(0,255,255,0.9);
+font-size:22px;
+font-weight:800;
 }
 
-.success{
+.how-icon{
+width:40px;
+height:40px;
+border-radius:50%;
+background:white;
+color:#0099ff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:800;
+}
 
+/* Modal */
+.modal-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.85);
 display:none;
-
-text-align:center;
-
-font-size:24px;
-
-margin-top:30px;
-
+justify-content:center;
+align-items:center;
+z-index:999;
 }
 
-.error{
-
-color:#ffdfdf;
-
+.modal-content{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(25px);
+padding:40px;
+border-radius:25px;
+max-width:500px;
+width:90%;
 text-align:center;
+box-shadow:0 0 60px #00f5ff;
+}
 
-margin-bottom:10px;
+.close-btn{
+margin-top:20px;
+padding:12px 25px;
+border:none;
+border-radius:10px;
+background:linear-gradient(90deg,#ff00cc,#ff8c00);
+color:white;
+font-weight:800;
+cursor:pointer;
+}
+
+/* ---------------- MOBILE POLISH ---------------- */
+@media(max-width:768px){
+
+.card{
+padding:30px 22px;
+}
+
+form{
+gap:14px;
+}
+
+.row,.phone-group{
+flex-direction:column;
+}
+
+input,select{
+height:58px;
+padding:0 18px;
+}
+
+.dob-wrapper input{
+height:58px;
+}
+
+button{
+margin-top:8px;
+}
+
+.nuclear-headline{
+font-size:26px;
+}
+
+.prize-line{
+font-size:18px;
+}
+
+.how-box{
+font-size:18px;
+padding:18px;
+}
 
 }
+/* ------------------------------------------------ */
+
 </style>
 </head>
+
 <body>
-<div class="container">
-<h1>HURRY REGISTER NOW</h1>
-<div class="sub">UP TO $500 IN PRIZES</div>
-<div class="error" id="error"></div>
-<form id="signupForm">
-<input id="firstname" placeholder="First Name">
-<input id="lastname" placeholder="Last Name">
-<select id="sex">
-<option value="">Select Sex</option>
+
+<script>
+/* Confetti */
+setInterval(()=>{
+for(let i=0;i<12;i++){
+let c=document.createElement("div");
+c.classList.add("confetti");
+c.style.left=Math.random()*100+"vw";
+c.style.width=(Math.random()*8+6)+"px";
+c.style.height=(Math.random()*6+4)+"px";
+c.style.background=["#ff00cc","#ff8c00","#00f5ff","#ffffff","#ffff00"][Math.floor(Math.random()*5)];
+c.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),6000);
+}
+},400);
+</script>
+
+<div class="launch-banner">
+🚀 Launching 1st June 2026 🚀
+</div>
+
+<div class="wrapper">
+<div class="card">
+
+<div class="headline-wrap">
+<div class="nuclear-headline">HURRY REGISTER NOW!!</div>
+<div class="prize-line">UP TO $500 IN PRIZES!!</div>
+</div>
+
+<form id="entryForm">
+
+<div class="row">
+<input type="text" name="first_name" placeholder="First Name" required>
+<input type="text" name="surname" placeholder="Surname" required>
+</div>
+
+<select name="sex" required>
+<option value="" disabled selected>Select Sex</option>
 <option>Male</option>
 <option>Female</option>
 <option>Other</option>
+<option>Prefer not to say</option>
 </select>
-<input id="email" type="email" placeholder="Email">
-<input id="phone" placeholder="Phone Number">
-<input id="birthday" placeholder="Select Your Birthday">
-<button type="submit" class="enter">ENTER NOW 🚀</button>
+
+<input type="email" name="email" placeholder="Email Address" required>
+
+<div class="phone-group">
+<select name="country_code" required>
+<option value="+61">+61</option>
+<option value="+1">+1</option>
+<option value="+44">+44</option>
+<option value="+64">+64</option>
+</select>
+<input type="tel" name="phone" placeholder="Phone Number" required>
+</div>
+
+<div class="dob-wrapper">
+<label for="dob" class="dob-label">Select Your Birthday</label>
+<input type="text" id="dob" name="date_of_birth" required>
+</div>
+
+<button type="submit">ENTER NOW 🚀</button>
+
+<div class="how-box" onclick="openModal()">
+<div class="how-icon">?</div>
+How It Works
+</div>
+
 </form>
-<div class="success" id="success">
 
-Entry submitted successfully 🎉
 </div>
 </div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="howModal">
+  <div class="modal-content">
+    <h2>🎉 How It Works</h2>
+    <p>
+      1. Enter your details once.<br><br>
+      2. On your birthday, you are automatically entered into our daily prize draw.<br><br>
+      3. Winners are contacted directly.<br><br>
+      4. The more people join, the bigger the prizes grow!<br><br>
+      5. It’s absolutely free!
+    </p>
+    <button class="close-btn" onclick="closeModal()">CLOSE</button>
+  </div>
+</div>
+
 <script>
+flatpickr("#dob",{dateFormat:"Y-m-d",maxDate:"today",allowInput:true});
 
-flatpickr("#birthday",{
+function openModal(){
+document.getElementById("howModal").style.display="flex";
+}
 
-dateFormat:"d M Y",
+function closeModal(){
+document.getElementById("howModal").style.display="none";
+}
 
-maxDate:"today"
-
+document.getElementById("howModal").addEventListener("click",function(e){
+if(e.target.id==="howModal"){closeModal();}
 });
 
-document.getElementById("signupForm").addEventListener("submit",function(e){
-
-e.preventDefault();
-
-const errorBox = document.getElementById("error");
-
-errorBox.innerHTML = "";
-
-const firstname = document.getElementById("firstname").value.trim();
-
-const lastname = document.getElementById("lastname").value.trim();
-
-const sex = document.getElementById("sex").value;
-
-const email = document.getElementById("email").value.trim();
-
-const phone = document.getElementById("phone").value.trim();
-
-const birthdayValue = document.getElementById("birthday").value;
-
-if(!firstname || !lastname || !sex || !email || !phone || !birthdayValue){
-
-errorBox.innerHTML="Please complete all fields";
-
-return;
-
-}
-
-const birth = new Date(birthdayValue);
-
-const today = new Date();
-
-let age = today.getFullYear() - birth.getFullYear();
-
-let m = today.getMonth() - birth.getMonth();
-
-if(m < 0 || (m === 0 && today.getDate() < birth.getDate())){
-
-age--;
-
-}
-
-if(age < 18){
-
-errorBox.innerHTML="You must be over 18 to enter";
-
-return;
-
-}
-
-document.getElementById("signupForm").style.display="none";
-
-document.getElementById("success").style.display="block";
-
+document.addEventListener("keydown",function(e){
+if(e.key==="Escape"){closeModal();}
 });
 </script>
+
 </body>
 </html>
- 
