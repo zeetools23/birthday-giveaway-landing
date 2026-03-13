@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <style>
-
 body {
     margin:0;
     font-family:'Poppins', sans-serif;
@@ -28,7 +27,6 @@ body {
     100%{background-position:0% 50%}
 }
 
-/* Glow pulse overlay */
 body::after{
     content:"";
     position:fixed;
@@ -43,7 +41,7 @@ body::after{
     100%{opacity:0.3}
 }
 
-/* Confetti rain */
+/* Confetti */
 .confetti{
     position:fixed;
     top:-20px;
@@ -56,7 +54,7 @@ body::after{
     100%{transform:translateY(110vh) rotate(720deg);}
 }
 
-/* Launch banner */
+/* Banner */
 .launch-banner{
     text-align:center;
     padding:14px;
@@ -88,32 +86,21 @@ body::after{
     text-align:center;
     box-shadow:0 0 80px rgba(255,0,128,0.6),
                0 0 150px rgba(0,255,255,0.5);
-    animation:popIn 0.6s ease;
-}
-@keyframes popIn{
-    0%{transform:scale(0.85);opacity:0}
-    100%{transform:scale(1);opacity:1}
 }
 
-/* HEADLINE - GLOW SWEEP EFFECT */
-.headline-wrap{
-    margin-bottom:30px;
-}
+/* Headline */
+.headline-wrap{margin-bottom:30px;}
 
 .nuclear-headline{
     font-size:34px;
     font-weight:800;
     text-transform:uppercase;
-    position:relative;
-    display:inline-block;
     background:linear-gradient(90deg,#ffffff,#ffff00,#ffffff);
     background-size:200% auto;
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     animation:shineText 3s linear infinite;
-    text-shadow:0 0 25px rgba(255,255,255,0.8);
 }
-
 @keyframes shineText{
     0%{background-position:200% center;}
     100%{background-position:-200% center;}
@@ -125,36 +112,12 @@ body::after{
     font-weight:800;
     color:#ffff00;
     text-shadow:0 0 20px #ff8c00, 0 0 40px #ff0000;
-    animation:softPulse 2s ease-in-out infinite;
 }
 
-@keyframes softPulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.05);}
-    100%{transform:scale(1);}
-}
-
-.sub{
-    margin-bottom:30px;
-    font-size:15px;
-}
-
-/* FORM SPACING CLEAN + EVEN */
-form{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-}
-
-.row{
-    display:flex;
-    gap:18px;
-}
-
-.phone-group{
-    display:flex;
-    gap:18px;
-}
+/* Form */
+form{display:flex;flex-direction:column;gap:18px;}
+.row{display:flex;gap:18px;}
+.phone-group{display:flex;gap:18px;}
 
 input,select{
     flex:1;
@@ -166,7 +129,6 @@ input,select{
     background:rgba(255,255,255,0.95);
 }
 
-/* Button */
 button{
     padding:22px;
     border:none;
@@ -176,31 +138,53 @@ button{
     font-size:22px;
     font-weight:800;
     cursor:pointer;
-    position:relative;
-    overflow:hidden;
     transition:0.3s;
 }
-button::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:rgba(255,255,255,0.4);
-    transform:skewX(-20deg);
-    animation:shine 3s infinite;
-}
-@keyframes shine{100%{left:200%;}}
 button:hover{
     transform:scale(1.05);
     box-shadow:0 25px 50px rgba(255,0,128,0.6);
 }
 
-.info-box{
-    font-size:14px;
+/* HOW IT WORKS BUTTON */
+.how-btn{
+    margin-top:10px;
+    background:none;
+    border:none;
+    color:#fff;
     font-weight:600;
-    min-height:40px;
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+/* MODAL */
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:100;
+}
+
+.modal{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:40px;
+    max-width:500px;
+    text-align:center;
+    box-shadow:0 0 50px #ff00cc;
+    animation:popModal 0.4s ease;
+}
+@keyframes popModal{
+    0%{transform:scale(0.7);opacity:0}
+    100%{transform:scale(1);opacity:1}
+}
+.close{
+    margin-top:20px;
+    font-weight:800;
+    cursor:pointer;
 }
 
 </style>
@@ -209,9 +193,8 @@ button:hover{
 <body>
 
 <script>
-/* Confetti storm */
 setInterval(()=>{
-    for(let i=0;i<15;i++){
+    for(let i=0;i<12;i++){
         let c=document.createElement("div");
         c.classList.add("confetti");
         c.style.left=Math.random()*100+"vw";
@@ -240,8 +223,6 @@ setInterval(()=>{
     UP TO $500 IN PRIZES!!
   </div>
 </div>
-
-<div class="sub">Enter once. Win every year.</div>
 
 <form id="entryForm">
 
@@ -272,36 +253,41 @@ setInterval(()=>{
 
 <input type="text" id="dob" name="date_of_birth" placeholder="Select Your Birthday" required>
 
-<div class="info-box" id="birthdayInfo"></div>
-
 <button type="submit">ENTER NOW 🚀</button>
+<button type="button" class="how-btn" onclick="openModal()">How It Works</button>
 
 </form>
 
 </div>
 </div>
 
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+<div class="modal">
+<h2>🎉 How It Works</h2>
+<p>
+1. Enter your details once.<br><br>
+2. On your birthday, you're automatically entered into our daily prize draw.<br><br>
+3. Winners are contacted directly.<br><br>
+4. The more people join, the bigger the prizes grow!
+</p>
+<div class="close" onclick="closeModal()">CLOSE</div>
+</div>
+</div>
+
 <script>
-flatpickr("#dob",{
-    dateFormat:"Y-m-d",
-    maxDate:"today",
-    onChange:function(selectedDates){
-        if(!selectedDates.length)return;
-        const birthDate=selectedDates[0];
-        const today=new Date();
-        const age=today.getFullYear()-birthDate.getFullYear();
-        if(age<18){
-            alert("You must be 18+ to enter.");
-            document.getElementById("dob").value="";
-            return;
-        }
-        const nextBirthday=new Date(today.getFullYear(),birthDate.getMonth(),birthDate.getDate());
-        if(nextBirthday<today)nextBirthday.setFullYear(today.getFullYear()+1);
-        const diffDays=Math.ceil((nextBirthday-today)/(1000*60*60*24));
-        document.getElementById("birthdayInfo").innerHTML=
-            "🎉 "+diffDays+" days until your birthday!";
-    }
+flatpickr("#dob",{dateFormat:"Y-m-d",maxDate:"today"});
+
+function openModal(){
+    document.getElementById("modal").style.display="flex";
+}
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+document.getElementById("modal").addEventListener("click",function(e){
+    if(e.target.id==="modal"){closeModal();}
 });
+
 document.getElementById("entryForm").addEventListener("submit",async function(e){
     e.preventDefault();
     const formData=new FormData(this);
