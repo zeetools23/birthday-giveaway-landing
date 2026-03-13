@@ -18,7 +18,7 @@ body {
                 radial-gradient(circle at 80% 70%, #00f5ff, transparent 40%),
                 linear-gradient(-45deg,#ff0080,#ff8c00,#00f5ff,#ff0000);
     background-size:400% 400%;
-    animation:bgMove 6s ease infinite;
+    animation:bgMove 8s ease infinite;
     overflow-x:hidden;
     color:white;
 }
@@ -28,22 +28,22 @@ body {
     100%{background-position:0% 50%}
 }
 
-/* Glow pulse */
+/* Glow pulse overlay */
 body::after{
     content:"";
     position:fixed;
     inset:0;
     background:radial-gradient(circle,rgba(255,255,255,0.15),transparent 60%);
-    animation:pulse 3s infinite;
+    animation:pulse 4s infinite;
     pointer-events:none;
 }
 @keyframes pulse{
     0%{opacity:0.3}
-    50%{opacity:0.8}
+    50%{opacity:0.7}
     100%{opacity:0.3}
 }
 
-/* CONFETTI RAIN */
+/* Confetti rain */
 .confetti{
     position:fixed;
     top:-20px;
@@ -53,7 +53,7 @@ body::after{
     z-index:1;
 }
 @keyframes fall{
-    100%{transform:translateY(110vh) rotate(1080deg);}
+    100%{transform:translateY(110vh) rotate(720deg);}
 }
 
 /* Launch banner */
@@ -72,7 +72,7 @@ body::after{
     justify-content:center;
     align-items:center;
     min-height:calc(100vh - 60px);
-    padding:20px;
+    padding:30px 20px;
     position:relative;
     z-index:5;
 }
@@ -81,78 +81,84 @@ body::after{
     background:rgba(255,255,255,0.15);
     backdrop-filter:blur(25px);
     border:2px solid rgba(255,255,255,0.3);
-    padding:50px 40px;
+    padding:60px 50px;
     border-radius:30px;
-    max-width:560px;
+    max-width:600px;
     width:100%;
     text-align:center;
-    box-shadow:0 0 60px rgba(255,0,128,0.7),
-               0 0 120px rgba(0,255,255,0.6);
+    box-shadow:0 0 80px rgba(255,0,128,0.6),
+               0 0 150px rgba(0,255,255,0.5);
     animation:popIn 0.6s ease;
 }
 @keyframes popIn{
-    0%{transform:scale(0.6);opacity:0}
+    0%{transform:scale(0.85);opacity:0}
     100%{transform:scale(1);opacity:1}
 }
 
-/* NUCLEAR HEADLINE */
+/* HEADLINE - GLOW SWEEP EFFECT */
 .headline-wrap{
-    margin-bottom:20px;
+    margin-bottom:30px;
 }
 
 .nuclear-headline{
-    font-size:36px;
+    font-size:34px;
     font-weight:800;
     text-transform:uppercase;
-    color:#fff;
-    text-shadow:
-        0 0 10px #ff00cc,
-        0 0 20px #ff00cc,
-        0 0 40px #ff0080,
-        0 0 80px #ff0000;
-    animation:flash 0.8s infinite alternate,
-               shake 0.8s infinite;
+    position:relative;
+    display:inline-block;
+    background:linear-gradient(90deg,#ffffff,#ffff00,#ffffff);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:shineText 3s linear infinite;
+    text-shadow:0 0 25px rgba(255,255,255,0.8);
+}
+
+@keyframes shineText{
+    0%{background-position:200% center;}
+    100%{background-position:-200% center;}
 }
 
 .prize-line{
+    margin-top:15px;
     font-size:22px;
     font-weight:800;
-    margin-top:10px;
     color:#ffff00;
-    text-shadow:
-        0 0 10px #ffff00,
-        0 0 20px #ff8c00,
-        0 0 40px #ff0000;
-    animation:pulsePrize 1s infinite;
+    text-shadow:0 0 20px #ff8c00, 0 0 40px #ff0000;
+    animation:softPulse 2s ease-in-out infinite;
 }
 
-/* Animations */
-@keyframes flash{
-    from{opacity:1;}
-    to{opacity:0.6;}
-}
-@keyframes shake{
-    0%{transform:translateX(0);}
-    25%{transform:translateX(-4px);}
-    50%{transform:translateX(4px);}
-    75%{transform:translateX(-4px);}
-    100%{transform:translateX(0);}
-}
-@keyframes pulsePrize{
+@keyframes softPulse{
     0%{transform:scale(1);}
-    50%{transform:scale(1.1);}
+    50%{transform:scale(1.05);}
     100%{transform:scale(1);}
 }
 
 .sub{
-    margin-bottom:20px;
+    margin-bottom:30px;
     font-size:15px;
 }
 
+/* FORM SPACING CLEAN + EVEN */
+form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.row{
+    display:flex;
+    gap:18px;
+}
+
+.phone-group{
+    display:flex;
+    gap:18px;
+}
+
 input,select{
-    width:100%;
+    flex:1;
     padding:18px;
-    margin:12px 0;
     border-radius:14px;
     border:none;
     font-size:15px;
@@ -160,14 +166,9 @@ input,select{
     background:rgba(255,255,255,0.95);
 }
 
-.row{display:flex;gap:10px;}
-.phone-group{display:flex;gap:8px;}
-.phone-group select{width:100px;}
-
+/* Button */
 button{
-    width:100%;
-    padding:20px;
-    margin-top:15px;
+    padding:22px;
     border:none;
     border-radius:15px;
     background:linear-gradient(90deg,#ff00cc,#ff8c00);
@@ -188,18 +189,18 @@ button::after{
     height:100%;
     background:rgba(255,255,255,0.4);
     transform:skewX(-20deg);
-    animation:shine 2s infinite;
+    animation:shine 3s infinite;
 }
 @keyframes shine{100%{left:200%;}}
 button:hover{
-    transform:scale(1.1);
-    box-shadow:0 25px 50px rgba(255,0,128,0.7);
+    transform:scale(1.05);
+    box-shadow:0 25px 50px rgba(255,0,128,0.6);
 }
 
 .info-box{
-    margin-top:10px;
     font-size:14px;
     font-weight:600;
+    min-height:40px;
 }
 
 </style>
@@ -208,20 +209,20 @@ button:hover{
 <body>
 
 <script>
-/* CONFETTI STORM */
+/* Confetti storm */
 setInterval(()=>{
-    for(let i=0;i<20;i++){
+    for(let i=0;i<15;i++){
         let c=document.createElement("div");
         c.classList.add("confetti");
         c.style.left=Math.random()*100+"vw";
-        c.style.width=(Math.random()*10+6)+"px";
+        c.style.width=(Math.random()*8+6)+"px";
         c.style.height=(Math.random()*6+4)+"px";
         c.style.background=["#ff00cc","#ff8c00","#00f5ff","#ffffff","#ffff00"][Math.floor(Math.random()*5)];
-        c.style.animationDuration=(Math.random()*3+2)+"s";
+        c.style.animationDuration=(Math.random()*3+3)+"s";
         document.body.appendChild(c);
-        setTimeout(()=>c.remove(),5000);
+        setTimeout(()=>c.remove(),6000);
     }
-},300);
+},400);
 </script>
 
 <div class="launch-banner">
@@ -232,11 +233,11 @@ setInterval(()=>{
 <div class="card">
 
 <div class="headline-wrap">
-  <h1 class="nuclear-headline">
-    🚨 HURRY REGISTER NOW!! 🚨
-  </h1>
+  <div class="nuclear-headline">
+    HURRY REGISTER NOW!!
+  </div>
   <div class="prize-line">
-    💰 UP TO $500 IN PRIZES!! 💰
+    UP TO $500 IN PRIZES!!
   </div>
 </div>
 
@@ -297,24 +298,10 @@ flatpickr("#dob",{
         const nextBirthday=new Date(today.getFullYear(),birthDate.getMonth(),birthDate.getDate());
         if(nextBirthday<today)nextBirthday.setFullYear(today.getFullYear()+1);
         const diffDays=Math.ceil((nextBirthday-today)/(1000*60*60*24));
-        const zodiac=getZodiac(birthDate.getMonth()+1,birthDate.getDate());
         document.getElementById("birthdayInfo").innerHTML=
-            "🎉 "+diffDays+" days until your birthday!<br>♈ Zodiac: "+zodiac;
+            "🎉 "+diffDays+" days until your birthday!";
     }
 });
-function getZodiac(month,day){
-    const signs=[
-        ["Capricorn",1,19],["Aquarius",2,18],["Pisces",3,20],
-        ["Aries",4,19],["Taurus",5,20],["Gemini",6,20],
-        ["Cancer",7,22],["Leo",8,22],["Virgo",9,22],
-        ["Libra",10,22],["Scorpio",11,21],["Sagittarius",12,21],
-        ["Capricorn",12,31]
-    ];
-    for(let i=0;i<signs.length;i++){
-        if(month===signs[i][1]&&day<=signs[i][2])return signs[i][0];
-    }
-    return "Unknown";
-}
 document.getElementById("entryForm").addEventListener("submit",async function(e){
     e.preventDefault();
     const formData=new FormData(this);
