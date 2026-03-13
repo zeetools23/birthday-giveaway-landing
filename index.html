@@ -11,9 +11,7 @@
 
 <style>
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body{
     margin:0;
@@ -32,7 +30,6 @@ body{
     100%{background-position:0% 50%}
 }
 
-/* glow overlay */
 body::after{
     content:"";
     position:fixed;
@@ -47,7 +44,7 @@ body::after{
     100%{opacity:0.4}
 }
 
-/* confetti */
+/* Confetti */
 .confetti{
     position:fixed;
     top:-20px;
@@ -60,7 +57,7 @@ body::after{
     100%{transform:translateY(110vh) rotate(1080deg);}
 }
 
-/* banner */
+/* Banner */
 .launch-banner{
     text-align:center;
     padding:14px;
@@ -69,7 +66,7 @@ body::after{
     letter-spacing:2px;
 }
 
-/* layout */
+/* Layout */
 .wrapper{
     display:flex;
     justify-content:center;
@@ -94,7 +91,6 @@ body::after{
     overflow:hidden;
 }
 
-/* animated border */
 .card::before{
     content:"";
     position:absolute;
@@ -111,7 +107,7 @@ body::after{
     100%{background-position:400% 50%}
 }
 
-/* headline */
+/* Headline */
 .headline-wrap{margin-bottom:35px;}
 
 .nuclear-headline{
@@ -163,6 +159,25 @@ input,select{
     background:rgba(255,255,255,0.95);
 }
 
+/* DOB floating label */
+.dob-wrapper{
+    position:relative;
+    text-align:left;
+}
+
+.dob-label{
+    position:absolute;
+    top:-10px;
+    left:14px;
+    background:rgba(255,255,255,0.95);
+    padding:2px 8px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+    color:#444;
+}
+
+/* Button */
 button{
     padding:22px;
     border:none;
@@ -179,7 +194,7 @@ button:hover{
     box-shadow:0 25px 60px rgba(255,0,128,0.7);
 }
 
-/* how box */
+/* How box */
 .how-box{
     margin-top:10px;
     padding:22px;
@@ -211,7 +226,7 @@ button:hover{
     font-weight:800;
 }
 
-/* modal */
+/* Modal */
 .modal-overlay{
     position:fixed;
     inset:0;
@@ -236,36 +251,14 @@ button:hover{
     cursor:pointer;
 }
 
-/* ========================= */
-/* MOBILE FIX */
-/* ========================= */
-
-@media (max-width: 768px) {
-
-    .card {
-        padding: 35px 25px;
-    }
-
-    .row {
-        flex-direction: column;
-    }
-
-    .phone-group {
-        flex-direction: column;
-    }
-
-    .nuclear-headline {
-        font-size: 26px;
-    }
-
-    .prize-line {
-        font-size: 18px;
-    }
-
-    .how-box {
-        font-size: 18px;
-        padding: 18px;
-    }
+/* MOBILE */
+@media (max-width:768px){
+    .card{padding:35px 25px;}
+    .row{flex-direction:column;}
+    .phone-group{flex-direction:column;}
+    .nuclear-headline{font-size:26px;}
+    .prize-line{font-size:18px;}
+    .how-box{font-size:18px;padding:18px;}
 }
 
 </style>
@@ -328,7 +321,10 @@ setInterval(()=>{
 <input type="tel" name="phone" placeholder="Phone Number" required>
 </div>
 
-<input type="text" id="dob" name="date_of_birth" placeholder="Select Your Birthday" required>
+<div class="dob-wrapper">
+<label for="dob" class="dob-label">Select Your Birthday</label>
+<input type="text" id="dob" name="date_of_birth" required>
+</div>
 
 <button type="submit">ENTER NOW 🚀</button>
 
@@ -357,10 +353,18 @@ How It Works
 </div>
 
 <script>
-flatpickr("#dob",{dateFormat:"Y-m-d",maxDate:"today"});
+flatpickr("#dob",{
+    dateFormat:"Y-m-d",
+    maxDate:"today",
+    allowInput:true
+});
 
-function openModal(){document.getElementById("modal").style.display="flex";}
-function closeModal(){document.getElementById("modal").style.display="none";}
+function openModal(){
+document.getElementById("modal").style.display="flex";
+}
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
 document.getElementById("modal").addEventListener("click",function(e){
 if(e.target.id==="modal"){closeModal();}
 });
