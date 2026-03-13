@@ -13,7 +13,9 @@
 body {
     margin:0;
     font-family:'Poppins', sans-serif;
-    background: linear-gradient(-45deg,#ff00cc,#ff8c00,#00f5ff,#ff0000);
+    background: radial-gradient(circle at 20% 30%, #ff00cc, transparent 40%),
+                radial-gradient(circle at 80% 70%, #00f5ff, transparent 40%),
+                linear-gradient(-45deg,#ff0080,#ff8c00,#00f5ff,#ff0000);
     background-size:400% 400%;
     animation:bgMove 6s ease infinite;
     overflow-x:hidden;
@@ -25,23 +27,55 @@ body {
     100%{background-position:0% 50%}
 }
 
-.launch-banner {
-    text-align:center;
-    padding:12px;
-    font-weight:800;
-    background:rgba(0,0,0,0.4);
-    letter-spacing:1px;
+/* GLOW PULSE */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle,rgba(255,255,255,0.15),transparent 60%);
+    animation:pulse 3s infinite;
+    pointer-events:none;
+}
+@keyframes pulse{
+    0%{opacity:0.3}
+    50%{opacity:0.8}
+    100%{opacity:0.3}
 }
 
-.wrapper {
+/* CONFETTI RAIN */
+.confetti{
+    position:fixed;
+    top:-20px;
+    border-radius:3px;
+    opacity:0.9;
+    animation:fall linear infinite;
+    z-index:1;
+}
+@keyframes fall{
+    100%{transform:translateY(110vh) rotate(1080deg);}
+}
+
+/* LAUNCH BANNER */
+.launch-banner{
+    text-align:center;
+    padding:14px;
+    font-weight:800;
+    background:rgba(0,0,0,0.5);
+    letter-spacing:2px;
+    font-size:14px;
+}
+
+.wrapper{
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:calc(100vh - 50px);
+    min-height:calc(100vh - 60px);
     padding:20px;
+    position:relative;
+    z-index:5;
 }
 
-.card {
+.card{
     background:rgba(255,255,255,0.15);
     backdrop-filter:blur(25px);
     border:2px solid rgba(255,255,255,0.3);
@@ -50,50 +84,48 @@ body {
     max-width:550px;
     width:100%;
     text-align:center;
-    box-shadow:0 0 60px rgba(255,0,128,0.6);
+    box-shadow:0 0 60px rgba(255,0,128,0.7),
+               0 0 120px rgba(0,255,255,0.6);
     animation:popIn 0.6s ease;
 }
-@keyframes popIn {
-    0%{transform:scale(0.7);opacity:0}
+@keyframes popIn{
+    0%{transform:scale(0.6);opacity:0}
     100%{transform:scale(1);opacity:1}
 }
 
-h1 {
-    font-size:38px;
-    margin-bottom:10px;
-    text-shadow:0 0 20px #fff;
+h1{
+    font-size:34px;
+    margin-bottom:15px;
+    text-shadow:0 0 25px #fff;
+    animation:wiggle 3s infinite;
+}
+@keyframes wiggle{
+    0%,100%{transform:rotate(0)}
+    25%{transform:rotate(-2deg)}
+    75%{transform:rotate(2deg)}
 }
 
-.sub {
+.sub{
     margin-bottom:25px;
-    font-size:16px;
+    font-size:15px;
 }
 
-input, select {
+input,select{
     width:100%;
-    padding:16px;
+    padding:18px;
     margin:12px 0;
     border-radius:14px;
     border:none;
     font-size:15px;
     font-weight:600;
+    background:rgba(255,255,255,0.95);
 }
 
-.row {
-    display:flex;
-    gap:10px;
-}
+.row{display:flex;gap:10px;}
+.phone-group{display:flex;gap:8px;}
+.phone-group select{width:100px;}
 
-.phone-group {
-    display:flex;
-    gap:8px;
-}
-
-.phone-group select {
-    width:100px;
-}
-
-button {
+button{
     width:100%;
     padding:20px;
     margin-top:15px;
@@ -104,21 +136,53 @@ button {
     font-size:22px;
     font-weight:800;
     cursor:pointer;
+    position:relative;
+    overflow:hidden;
     transition:0.3s;
 }
-button:hover {
+button::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.4);
+    transform:skewX(-20deg);
+    animation:shine 2s infinite;
+}
+@keyframes shine{100%{left:200%;}}
+button:hover{
     transform:scale(1.1);
-    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    box-shadow:0 25px 50px rgba(255,0,128,0.7);
 }
 
-.info-box {
+.info-box{
     margin-top:10px;
     font-size:14px;
+    font-weight:600;
 }
 </style>
 </head>
 
 <body>
+
+<script>
+/* HEAVY CONFETTI */
+setInterval(()=>{
+    for(let i=0;i<20;i++){
+        let c=document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left=Math.random()*100+"vw";
+        c.style.width=(Math.random()*10+6)+"px";
+        c.style.height=(Math.random()*6+4)+"px";
+        c.style.background=["#ff00cc","#ff8c00","#00f5ff","#ffffff","#ffff00"][Math.floor(Math.random()*5)];
+        c.style.animationDuration=(Math.random()*3+2)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),5000);
+    }
+},300);
+</script>
 
 <div class="launch-banner">
 🚀 Launching 1st June 2026 🚀
@@ -169,64 +233,48 @@ button:hover {
 </div>
 
 <script>
-// FLATPICKR CALENDAR
-flatpickr("#dob", {
-    dateFormat: "Y-m-d",
-    maxDate: "today",
-    onChange: function(selectedDates) {
-        if (!selectedDates.length) return;
-
-        const birthDate = selectedDates[0];
-        const today = new Date();
-
-        const age = today.getFullYear() - birthDate.getFullYear();
-        if (age < 18) {
+flatpickr("#dob",{
+    dateFormat:"Y-m-d",
+    maxDate:"today",
+    onChange:function(selectedDates){
+        if(!selectedDates.length)return;
+        const birthDate=selectedDates[0];
+        const today=new Date();
+        const age=today.getFullYear()-birthDate.getFullYear();
+        if(age<18){
             alert("You must be 18+ to enter.");
-            document.getElementById("dob").value = "";
+            document.getElementById("dob").value="";
             return;
         }
-
-        const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-        if (nextBirthday < today) {
-            nextBirthday.setFullYear(today.getFullYear() + 1);
-        }
-
-        const diffTime = nextBirthday - today;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        const zodiac = getZodiac(birthDate.getMonth()+1, birthDate.getDate());
-
-        document.getElementById("birthdayInfo").innerHTML =
-            "🎉 " + diffDays + " days until your birthday!<br>♈ Zodiac: " + zodiac;
+        const nextBirthday=new Date(today.getFullYear(),birthDate.getMonth(),birthDate.getDate());
+        if(nextBirthday<today)nextBirthday.setFullYear(today.getFullYear()+1);
+        const diffDays=Math.ceil((nextBirthday-today)/(1000*60*60*24));
+        const zodiac=getZodiac(birthDate.getMonth()+1,birthDate.getDate());
+        document.getElementById("birthdayInfo").innerHTML=
+            "🎉 "+diffDays+" days until your birthday!<br>♈ Zodiac: "+zodiac;
     }
 });
-
-// ZODIAC FUNCTION
-function getZodiac(month, day) {
-    const signs = [
+function getZodiac(month,day){
+    const signs=[
         ["Capricorn",1,19],["Aquarius",2,18],["Pisces",3,20],
         ["Aries",4,19],["Taurus",5,20],["Gemini",6,20],
         ["Cancer",7,22],["Leo",8,22],["Virgo",9,22],
         ["Libra",10,22],["Scorpio",11,21],["Sagittarius",12,21],
         ["Capricorn",12,31]
     ];
-    for (let i=0;i<signs.length;i++){
-        if (month===signs[i][1] && day<=signs[i][2]) return signs[i][0];
+    for(let i=0;i<signs.length;i++){
+        if(month===signs[i][1]&&day<=signs[i][2])return signs[i][0];
     }
     return "Unknown";
 }
-
-// FORM SUBMIT
-document.getElementById("entryForm").addEventListener("submit", async function(e){
+document.getElementById("entryForm").addEventListener("submit",async function(e){
     e.preventDefault();
-    const formData = new FormData(this);
-
-    await fetch("https://formspree.io/f/xpqjgdww", {
+    const formData=new FormData(this);
+    await fetch("https://formspree.io/f/xpqjgdww",{
         method:"POST",
         body:formData,
-        headers:{ 'Accept':'application/json' }
+        headers:{'Accept':'application/json'}
     });
-
     window.location.href="thankyou.html";
 });
 </script>
