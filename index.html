@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <style>
+
 *{box-sizing:border-box;}
 
 body{
@@ -60,7 +61,7 @@ box-shadow:0 0 100px rgba(255,0,128,0.5),
 overflow:hidden;
 }
 
-/* NEW ICON STYLE HEADER */
+/* Header */
 .icon-headline{
 font-size:28px;
 font-weight:800;
@@ -96,6 +97,7 @@ background:rgba(255,255,255,0.95);
 width:100%;
 }
 
+/* FIXED DOB LABEL */
 .dob-wrapper{
 position:relative;
 text-align:left;
@@ -103,14 +105,14 @@ text-align:left;
 
 .dob-label{
 position:absolute;
-top:-10px;
-left:14px;
-background:white;
-padding:2px 8px;
-border-radius:6px;
-font-size:12px;
+top:6px;              /* moved inside box */
+left:16px;
+background:transparent;
+padding:0;
+font-size:14px;
 font-weight:600;
-color:#444;
+color:#777;
+pointer-events:none;
 }
 
 button{
@@ -188,6 +190,7 @@ font-size:22px;
 font-size:18px;
 }
 }
+
 </style>
 </head>
 
