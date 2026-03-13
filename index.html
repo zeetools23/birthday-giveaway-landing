@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <style>
+
 body {
     margin:0;
     font-family:'Poppins', sans-serif;
@@ -27,7 +28,7 @@ body {
     100%{background-position:0% 50%}
 }
 
-/* GLOW PULSE */
+/* Glow pulse */
 body::after{
     content:"";
     position:fixed;
@@ -55,16 +56,17 @@ body::after{
     100%{transform:translateY(110vh) rotate(1080deg);}
 }
 
-/* LAUNCH BANNER */
+/* Launch banner */
 .launch-banner{
     text-align:center;
     padding:14px;
     font-weight:800;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.6);
     letter-spacing:2px;
     font-size:14px;
 }
 
+/* Layout */
 .wrapper{
     display:flex;
     justify-content:center;
@@ -81,7 +83,7 @@ body::after{
     border:2px solid rgba(255,255,255,0.3);
     padding:50px 40px;
     border-radius:30px;
-    max-width:550px;
+    max-width:560px;
     width:100%;
     text-align:center;
     box-shadow:0 0 60px rgba(255,0,128,0.7),
@@ -93,20 +95,57 @@ body::after{
     100%{transform:scale(1);opacity:1}
 }
 
-h1{
-    font-size:34px;
-    margin-bottom:15px;
-    text-shadow:0 0 25px #fff;
-    animation:wiggle 3s infinite;
+/* NUCLEAR HEADLINE */
+.headline-wrap{
+    margin-bottom:20px;
 }
-@keyframes wiggle{
-    0%,100%{transform:rotate(0)}
-    25%{transform:rotate(-2deg)}
-    75%{transform:rotate(2deg)}
+
+.nuclear-headline{
+    font-size:36px;
+    font-weight:800;
+    text-transform:uppercase;
+    color:#fff;
+    text-shadow:
+        0 0 10px #ff00cc,
+        0 0 20px #ff00cc,
+        0 0 40px #ff0080,
+        0 0 80px #ff0000;
+    animation:flash 0.8s infinite alternate,
+               shake 0.8s infinite;
+}
+
+.prize-line{
+    font-size:22px;
+    font-weight:800;
+    margin-top:10px;
+    color:#ffff00;
+    text-shadow:
+        0 0 10px #ffff00,
+        0 0 20px #ff8c00,
+        0 0 40px #ff0000;
+    animation:pulsePrize 1s infinite;
+}
+
+/* Animations */
+@keyframes flash{
+    from{opacity:1;}
+    to{opacity:0.6;}
+}
+@keyframes shake{
+    0%{transform:translateX(0);}
+    25%{transform:translateX(-4px);}
+    50%{transform:translateX(4px);}
+    75%{transform:translateX(-4px);}
+    100%{transform:translateX(0);}
+}
+@keyframes pulsePrize{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
 }
 
 .sub{
-    margin-bottom:25px;
+    margin-bottom:20px;
     font-size:15px;
 }
 
@@ -162,13 +201,14 @@ button:hover{
     font-size:14px;
     font-weight:600;
 }
+
 </style>
 </head>
 
 <body>
 
 <script>
-/* HEAVY CONFETTI */
+/* CONFETTI STORM */
 setInterval(()=>{
     for(let i=0;i<20;i++){
         let c=document.createElement("div");
@@ -191,7 +231,15 @@ setInterval(()=>{
 <div class="wrapper">
 <div class="card">
 
-<h1>HURRY REGISTER NOW!!<br>UP TO $500 IN PRIZES!!</h1>
+<div class="headline-wrap">
+  <h1 class="nuclear-headline">
+    🚨 HURRY REGISTER NOW!! 🚨
+  </h1>
+  <div class="prize-line">
+    💰 UP TO $500 IN PRIZES!! 💰
+  </div>
+</div>
+
 <div class="sub">Enter once. Win every year.</div>
 
 <form id="entryForm">
