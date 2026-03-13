@@ -10,20 +10,17 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <style>
-
 *{box-sizing:border-box;}
 
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background:
-radial-gradient(circle at 20% 30%,#ff00cc,transparent 40%),
-radial-gradient(circle at 80% 70%,#00f5ff,transparent 40%),
-linear-gradient(-45deg,#ff0080,#ff8c00,#00f5ff,#ff0000);
+background:linear-gradient(-45deg,#ff0080,#ff8c00,#00f5ff,#ff0000);
 background-size:400% 400%;
-animation:bgMove 8s ease infinite;
+animation:bgMove 15s ease infinite;
 overflow-x:hidden;
 color:white;
+perspective:1200px;
 }
 
 @keyframes bgMove{
@@ -32,20 +29,33 @@ color:white;
 100%{background-position:0% 50%}
 }
 
-/* Confetti */
+/* floating particles */
+.particle{
+position:fixed;
+bottom:-20px;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:0.3;
+animation:rise linear infinite;
+}
+@keyframes rise{
+100%{transform:translateY(-110vh);opacity:0;}
+}
+
+/* confetti */
 .confetti{
 position:fixed;
 top:-20px;
 border-radius:3px;
-opacity:0.9;
 animation:fall linear infinite;
-z-index:1;
 }
 @keyframes fall{
-100%{transform:translateY(110vh) rotate(720deg);}
+100%{transform:translateY(110vh) translateX(40px) rotate(720deg);}
 }
 
-/* Banner */
+/* banner */
 .launch-banner{
 text-align:center;
 padding:14px;
@@ -54,42 +64,59 @@ background:rgba(0,0,0,0.6);
 letter-spacing:2px;
 }
 
-/* Layout */
+/* wrapper */
 .wrapper{
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:calc(100vh - 60px);
 padding:30px 20px;
-position:relative;
-z-index:5;
 }
 
+/* card with tilt + glow */
 .card{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(25px);
+position:relative;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(30px);
 border-radius:30px;
 padding:60px 50px;
 max-width:600px;
 width:100%;
 text-align:center;
-box-shadow:0 0 80px rgba(255,0,128,0.6),
-0 0 150px rgba(0,255,255,0.5);
+box-shadow:0 0 120px rgba(255,0,128,0.6),
+0 0 200px rgba(0,255,255,0.5);
+transform-style:preserve-3d;
+transition:transform 0.2s ease;
 overflow:hidden;
 }
 
-/* Headline */
-.headline-wrap{margin-bottom:30px;}
+/* moving reflection */
+.card::after{
+content:"";
+position:absolute;
+top:-100%;
+left:-50%;
+width:200%;
+height:300%;
+background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.15),transparent 60%);
+transform:rotate(25deg);
+animation:shine 8s linear infinite;
+}
+@keyframes shine{
+0%{top:-100%}
+100%{top:200%}
+}
 
+/* headline */
 .nuclear-headline{
 font-size:34px;
 font-weight:800;
 text-transform:uppercase;
-background:linear-gradient(90deg,#ffffff,#ffff00,#ffffff);
+background:linear-gradient(90deg,#fff,#ffff00,#fff);
 background-size:200% auto;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:shineText 3s linear infinite;
+animation:shineText 5s linear infinite;
 }
 @keyframes shineText{
 0%{background-position:200% center;}
@@ -100,14 +127,21 @@ animation:shineText 3s linear infinite;
 margin-top:15px;
 font-size:22px;
 font-weight:800;
-color:#ffff00;
-text-shadow:0 0 20px #ff8c00, 0 0 40px #ff0000;
+color:#ffd700;
+animation:flicker 3s infinite alternate;
+}
+@keyframes flicker{
+0%{opacity:1;}
+50%{opacity:0.8;}
+100%{opacity:1;}
 }
 
+/* form */
 form{
 display:flex;
 flex-direction:column;
 gap:18px;
+margin-top:30px;
 }
 
 .row,.phone-group{
@@ -123,25 +157,16 @@ border:none;
 font-size:15px;
 font-weight:600;
 background:rgba(255,255,255,0.95);
-width:100%;
+transition:all 0.3s ease;
 }
 
-/* 🔥 FIXED BIRTHDAY LABEL (ONLY CHANGE) */
-.dob-wrapper{
-position:relative;
-text-align:left;
-}
-.dob-label{
-position:absolute;
-top:8px;       /* was negative before */
-left:18px;
-background:transparent;
-font-size:14px;
-font-weight:600;
-color:#666;
-pointer-events:none;
+input:focus,select:focus{
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(0,255,255,0.6);
+outline:none;
 }
 
+/* magnetic button */
 button{
 padding:22px;
 border:none;
@@ -151,43 +176,47 @@ color:white;
 font-size:22px;
 font-weight:800;
 cursor:pointer;
+transition:transform 0.2s ease;
+position:relative;
+overflow:hidden;
 }
 
-.how-box{
-margin-top:10px;
-padding:22px;
-border-radius:15px;
-background:linear-gradient(135deg,#00f5ff,#0099ff);
-display:flex;
-align-items:center;
-justify-content:center;
-gap:14px;
-cursor:pointer;
-box-shadow:0 0 35px rgba(0,255,255,0.9);
-font-size:22px;
-font-weight:800;
+button::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.5),transparent 60%);
+animation:shimmer 4s infinite;
+}
+@keyframes shimmer{
+0%{left:-100%;}
+50%{left:120%;}
+100%{left:120%;}
 }
 
-.how-icon{
-width:40px;
-height:40px;
-border-radius:50%;
-background:white;
-color:#0099ff;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-font-weight:800;
+/* dob label */
+.dob-wrapper{
+position:relative;
+text-align:left;
+}
+.dob-label{
+position:absolute;
+top:8px;
+left:18px;
+font-size:14px;
+font-weight:600;
+color:#666;
+pointer-events:none;
 }
 
-/* Mobile */
+/* mobile */
 @media(max-width:768px){
-.card{padding:35px 25px;}
 .row,.phone-group{flex-direction:column;}
 .nuclear-headline{font-size:26px;}
 .prize-line{font-size:18px;}
-.how-box{font-size:18px;padding:18px;}
 }
 
 </style>
@@ -196,8 +225,17 @@ font-weight:800;
 <body>
 
 <script>
+// parallax tilt
+document.addEventListener("mousemove",function(e){
+const card=document.querySelector(".card");
+const x=(window.innerWidth/2 - e.pageX)/40;
+const y=(window.innerHeight/2 - e.pageY)/40;
+card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
+});
+
+// confetti
 setInterval(()=>{
-for(let i=0;i<12;i++){
+for(let i=0;i<6;i++){
 let c=document.createElement("div");
 c.classList.add("confetti");
 c.style.left=Math.random()*100+"vw";
@@ -208,7 +246,17 @@ c.style.animationDuration=(Math.random()*3+3)+"s";
 document.body.appendChild(c);
 setTimeout(()=>c.remove(),6000);
 }
-},400);
+},800);
+
+// particles
+setInterval(()=>{
+let p=document.createElement("div");
+p.classList.add("particle");
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(Math.random()*6+4)+"s";
+document.body.appendChild(p);
+setTimeout(()=>p.remove(),10000);
+},600);
 </script>
 
 <div class="launch-banner">
@@ -218,49 +266,47 @@ setTimeout(()=>c.remove(),6000);
 <div class="wrapper">
 <div class="card">
 
-<div class="headline-wrap">
-<div class="nuclear-headline">HURRY REGISTER NOW!!</div>
-<div class="prize-line">UP TO $500 IN PRIZES!!</div>
+<div class="nuclear-headline">
+HURRY REGISTER NOW!!
 </div>
 
-<form id="entryForm">
+<div class="prize-line">
+UP TO $500 IN PRIZES!!
+</div>
+
+<form>
 
 <div class="row">
-<input type="text" name="first_name" placeholder="First Name" required>
-<input type="text" name="surname" placeholder="Surname" required>
+<input type="text" placeholder="First Name" required>
+<input type="text" placeholder="Surname" required>
 </div>
 
-<select name="sex" required>
-<option value="" disabled selected>Select Sex</option>
+<select required>
+<option disabled selected>Select Sex</option>
 <option>Male</option>
 <option>Female</option>
 <option>Other</option>
 <option>Prefer not to say</option>
 </select>
 
-<input type="email" name="email" placeholder="Email Address" required>
+<input type="email" placeholder="Email Address" required>
 
 <div class="phone-group">
-<select name="country_code" required>
-<option value="+61">+61</option>
-<option value="+1">+1</option>
-<option value="+44">+44</option>
-<option value="+64">+64</option>
+<select>
+<option>+61</option>
+<option>+1</option>
+<option>+44</option>
+<option>+64</option>
 </select>
-<input type="tel" name="phone" placeholder="Phone Number" required>
+<input type="tel" placeholder="Phone Number" required>
 </div>
 
 <div class="dob-wrapper">
-<label for="dob" class="dob-label">Select Your Birthday</label>
-<input type="text" id="dob" name="date_of_birth" required>
+<label class="dob-label">Select Your Birthday</label>
+<input type="text" id="dob" required>
 </div>
 
-<button type="submit">ENTER NOW 🚀</button>
-
-<div class="how-box">
-<div class="how-icon">?</div>
-How It Works
-</div>
+<button>ENTER NOW 🚀</button>
 
 </form>
 
@@ -268,7 +314,7 @@ How It Works
 </div>
 
 <script>
-flatpickr("#dob",{dateFormat:"Y-m-d",maxDate:"today",allowInput:true});
+flatpickr("#dob",{dateFormat:"Y-m-d",maxDate:"today"});
 </script>
 
 </body>
