@@ -91,6 +91,7 @@ background-size:200% auto;
 -webkit-text-fill-color:transparent;
 animation:shineText 3s linear infinite;
 }
+
 @keyframes shineText{
 0%{background-position:200% center;}
 100%{background-position:-200% center;}
@@ -101,7 +102,7 @@ margin-top:15px;
 font-size:22px;
 font-weight:800;
 color:#ffff00;
-text-shadow:0 0 20px #ff8c00, 0 0 40px #ff0000;
+text-shadow:0 0 20px #ff8c00,0 0 40px #ff0000;
 }
 
 form{
@@ -124,29 +125,6 @@ font-size:15px;
 font-weight:600;
 background:rgba(255,255,255,0.95);
 width:100%;
-}
-
-/* Date fix */
-.dob-wrapper{
-position:relative;
-text-align:left;
-width:100%;
-}
-
-.dob-wrapper input{
-width:100%;
-display:block;
-}
-
-.dob-label{
-position:absolute;
-top:8px;
-left:18px;
-background:transparent;
-font-size:14px;
-font-weight:600;
-color:#666;
-pointer-events:none;
 }
 
 button{
@@ -221,56 +199,13 @@ font-weight:800;
 cursor:pointer;
 }
 
-/* ---------------- MOBILE POLISH ---------------- */
-@media(max-width:768px){
-
-.card{
-padding:30px 22px;
-}
-
-form{
-gap:14px;
-}
-
-.row,.phone-group{
-flex-direction:column;
-}
-
-input,select{
-height:58px;
-padding:0 18px;
-}
-
-.dob-wrapper input{
-height:58px;
-}
-
-button{
-margin-top:8px;
-}
-
-.nuclear-headline{
-font-size:26px;
-}
-
-.prize-line{
-font-size:18px;
-}
-
-.how-box{
-font-size:18px;
-padding:18px;
-}
-
-}
-/* ------------------------------------------------ */
-
 </style>
 </head>
 
 <body>
 
 <script>
+
 /* Confetti */
 setInterval(()=>{
 for(let i=0;i<12;i++){
@@ -285,6 +220,7 @@ document.body.appendChild(c);
 setTimeout(()=>c.remove(),6000);
 }
 },400);
+
 </script>
 
 <div class="launch-banner">
@@ -326,10 +262,7 @@ setTimeout(()=>c.remove(),6000);
 <input type="tel" name="phone" placeholder="Phone Number" required>
 </div>
 
-<div class="dob-wrapper">
-<label for="dob" class="dob-label">Select Your Birthday</label>
-<input type="text" id="dob" name="date_of_birth" required>
-</div>
+<input type="text" id="dob" name="date_of_birth" placeholder="Select Your Birthday" required>
 
 <button type="submit">ENTER NOW 🚀</button>
 
@@ -343,23 +276,26 @@ How It Works
 </div>
 </div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="howModal">
-  <div class="modal-content">
-    <h2>🎉 How It Works</h2>
-    <p>
-      1. Enter your details once.<br><br>
-      2. On your birthday, you are automatically entered into our daily prize draw.<br><br>
-      3. Winners are contacted directly.<br><br>
-      4. The more people join, the bigger the prizes grow!<br><br>
-      5. It’s absolutely free!
-    </p>
-    <button class="close-btn" onclick="closeModal()">CLOSE</button>
-  </div>
+<div class="modal-content">
+<h2>🎉 How It Works</h2>
+<p>
+1. Enter your details once.<br><br>
+2. On your birthday you enter the prize draw.<br><br>
+3. Winners are contacted directly.<br><br>
+4. More people means bigger prizes.<br><br>
+5. Entry costs nothing.
+</p>
+<button class="close-btn" onclick="closeModal()">CLOSE</button>
+</div>
 </div>
 
 <script>
-flatpickr("#dob",{dateFormat:"Y-m-d",maxDate:"today",allowInput:true});
+
+flatpickr("#dob",{
+dateFormat:"Y-m-d",
+maxDate:"today"
+});
 
 function openModal(){
 document.getElementById("howModal").style.display="flex";
@@ -376,6 +312,38 @@ if(e.target.id==="howModal"){closeModal();}
 document.addEventListener("keydown",function(e){
 if(e.key==="Escape"){closeModal();}
 });
+
+document.getElementById("entryForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const dob=document.getElementById("dob").value;
+
+if(!dob){
+alert("Please select your birthday");
+return;
+}
+
+const today=new Date();
+const birthDate=new Date(dob);
+
+let age=today.getFullYear()-birthDate.getFullYear();
+let m=today.getMonth()-birthDate.getMonth();
+
+if(m<0||(m===0&&today.getDate()<birthDate.getDate())){
+age--;
+}
+
+if(age<18){
+alert("You must be over 18 to enter.");
+document.getElementById("dob").value="";
+return;
+}
+
+alert("Entry submitted successfully.");
+
+});
+
 </script>
 
 </body>
